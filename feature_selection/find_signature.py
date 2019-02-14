@@ -27,6 +27,8 @@ vectorizer = TfidfVectorizer(sublinear_tf=True, max_df=0.5,
                              stop_words='english')
 features_train = vectorizer.fit_transform(features_train)
 features_test  = vectorizer.transform(features_test).toarray()
+print vectorizer.get_feature_names()[14343]
+
 
 
 ### a classic way to overfit is to use a small number
@@ -35,9 +37,22 @@ features_test  = vectorizer.transform(features_test).toarray()
 features_train = features_train[:150].toarray()
 labels_train   = labels_train[:150]
 
-
+print features_train.shape
 
 ### your code goes here
-
+from sklearn import tree
+clf = tree.DecisionTreeClassifier()
+clf.fit(features_train,labels_train)
+print clf.score(features_test,labels_test)
+kapil = []
+for i in (clf.feature_importances_):
+    if i <0.2:
+      pass
+    else:
+      kapil = [i]
+print kapil
+#kapil = [i for i in clf.feature_importances_ if i >=0.2]
+#print kapil
+    
 
 
